@@ -1,0 +1,945 @@
+variables {
+    global:
+        0: Ball
+        1: __currentMap___
+        2: Ball2
+        3: Team1GoalEffect
+        4: Team2GoalEffect
+        5: MapPositions
+        6: G
+        7: MapCenter
+        8: BallEffect
+        9: IsBallPickedUp
+        10: BallPosition
+        11: CurrentBallHolder
+        12: LastBallHolder
+        13: Assister
+        14: AssembleHeroTimerConstant
+        15: BallColor
+        16: HasGoalBeenScored
+        17: I
+        18: CameraPositionOnGoalScored
+        19: Team1Goals
+        20: Team2Goals
+        23: GoalsToWin
+        24: MinutesOnTimer
+        26: TensOnTimer
+        27: SecondsOnTimer
+        28: TimerStarted
+        29: TimerHud
+        30: __currentMap____
+    player:
+        0: IsBallPickUpable
+        1: Goals
+        2: Assists
+        4: BallIcon
+        5: ArrowColor
+}
+rule ("OverPy Map Detection") {
+    event {
+        Ongoing - Global;
+    }
+    actions {
+        If(Array Contains(Array(Map(Ayutthaya), Map(Antarctic Peninsula), Map(Black Forest), Map(Black Forest), Map(Blizzard World), Map(Blizzard World), Map(Busan), Map(Busan), Map(Busan), Map(Castillo), Map(Château Guillard), Map(Château Guillard), Map(Circuit Royal), Map(Colosseo), Map(Dorado), Map(Ecopoint: Antarctica), Map(Ecopoint: Antarctica), Map(Eichenwalde), Map(Eichenwalde), Map(Esperança), Map(Hanamura), Map(Hanamura), Map(Havana), Map(Hollywood), Map(Hollywood), Map(Horizon Lunar Colony), Map(Ilios), Map(Ilios), Map(Ilios), Map(Ilios), Map(Junkenstein's Revenge), Map(Junkertown), Map(Kanezaka), Map(King's Row), Map(King's Row), Map(Lijiang Control Center), Map(Lijiang Control Center), Map(Lijiang Garden), Map(Lijiang Garden), Map(Lijiang Night Market), Map(Lijiang Night Market), Map(Lijiang Tower), Map(Lijiang Tower), Map(Malevento), Map(Midtown), Map(Necropolis), Map(Nepal), Map(Nepal), Map(Nepal), Map(Nepal), Map(Nepal), Map(New Queen Street), Map(Oasis), Map(Oasis), Map(Oasis), Map(Oasis), Map(Paraíso), Map(Paris), Map(Petra), Map(Practice Range), Map(Rialto), Map(Route 66), Map(Temple of Anubis), Map(Volskaya Industries), Map(Watchpoint: Gibraltar), Map(Workshop Chamber), Map(Workshop Expanse), Map(Workshop Expanse), Map(Workshop Green Screen), Map(Workshop Island), Map(Workshop Island), Map(Shambali Monastery)), Current Map));
+            Set Global Variable(__currentMap___, Current Map);
+            Abort;
+        End;
+        Set Global Variable(__currentMap___, Ray Cast Hit Position(Vector(500, 100, 500), Vector(-500, -100, -500), Null, Null, False));
+        If(Or(Compare(Global.__currentMap___, ==, Vector(0, 0, 0)), Compare(Global.__currentMap___, ==, Vector(-500, -100, -500))));
+            Set Global Variable(__currentMap___, Ray Cast Hit Position(Vector(30, 5, 0), Vector(-30, -10, -10), Null, Null, False));
+            If(Compare(Global.__currentMap___, ==, Vector(-30, -10, -10)));
+                Set Global Variable(__currentMap___, Ray Cast Hit Position(Vector(200, 20, 100), Vector(100, -100, -100), Null, Null, False));
+                If(Compare(Global.__currentMap___, ==, Vector(100, -100, -100)));
+                    Set Global Variable(__currentMap___, Ray Cast Hit Position(Vector(300, 20, -100), Vector(300, -100, 100), Null, Null, False));
+                    If(Compare(Global.__currentMap___, ==, Vector(300, -100, 100)));
+                        Set Global Variable(__currentMap___, Ray Cast Hit Position(Vector(50, 100, -150), Vector(-50, -100, -160), Null, Null, False));
+                        If(Compare(Global.__currentMap___, ==, Vector(-50, -100, -160)));
+                            Set Global Variable(__currentMap___, Ray Cast Hit Position(Vector(0, 300, 340), Vector(0, -100, -300), Null, Null, False));
+                            If(Compare(Global.__currentMap___, ==, Vector(0, -100, -300)));
+                                Set Global Variable(__currentMap___, Ray Cast Hit Position(Vector(140, 10, -240), Vector(200, -10, -300), Null, Null, False));
+                                If(Compare(Global.__currentMap___, ==, Vector(200, -10, -300)));
+                                    Set Global Variable(__currentMap___, Ray Cast Hit Position(Vector(-180, 30, 60), Vector(-180, -50, -60), Null, Null, False));
+                                End;
+                            End;
+                        End;
+                    End;
+                End;
+            End;
+        End;
+        Set Global Variable(__currentMap___, Add(Add(Multiply(100, Round To Integer(Y Component Of(Global.__currentMap___), Up)), Multiply(10, Round To Integer(X Component Of(Global.__currentMap___), To Nearest))), Round To Integer(Z Component Of(Global.__currentMap___), Down)));
+        If(Compare(Global.__currentMap___, ==, 10121));
+            Set Global Variable(__currentMap___, Ray Cast Hit Position(Vector(-60, 20, -60), Vector(60, -10, 60), Null, Null, False));
+            If(Compare(Global.__currentMap___, ==, Vector(60, -10, 60)));
+                Set Global Variable(__currentMap___, Ray Cast Hit Position(Vector(-180, -70, 60), Vector(-180, -100, -60), Null, Null, False));
+            End;
+            Set Global Variable(__currentMap___, Add(Add(Multiply(100, Round To Integer(Y Component Of(Global.__currentMap___), Up)), Multiply(10, Round To Integer(X Component Of(Global.__currentMap___), To Nearest))), Round To Integer(Z Component Of(Global.__currentMap___), Down)));
+    }
+}
+
+rule ("OverPy Map Detection") {
+    event {
+        Ongoing - Global;
+    }
+    actions {
+        If(Array Contains(Array(Map(Ayutthaya), Map(Antarctic Peninsula), Map(Black Forest), Map(Black Forest), Map(Blizzard World), Map(Blizzard World), Map(Busan), Map(Busan), Map(Busan), Map(Castillo), Map(Château Guillard), Map(Château Guillard), Map(Circuit Royal), Map(Colosseo), Map(Dorado), Map(Ecopoint: Antarctica), Map(Ecopoint: Antarctica), Map(Eichenwalde), Map(Eichenwalde), Map(Esperança), Map(Hanamura), Map(Hanamura), Map(Havana), Map(Hollywood), Map(Hollywood), Map(Horizon Lunar Colony), Map(Ilios), Map(Ilios), Map(Ilios), Map(Ilios), Map(Junkenstein's Revenge), Map(Junkertown), Map(Kanezaka), Map(King's Row), Map(King's Row), Map(Lijiang Control Center), Map(Lijiang Control Center), Map(Lijiang Garden), Map(Lijiang Garden), Map(Lijiang Night Market), Map(Lijiang Night Market), Map(Lijiang Tower), Map(Lijiang Tower), Map(Malevento), Map(Midtown), Map(Necropolis), Map(Nepal), Map(Nepal), Map(Nepal), Map(Nepal), Map(Nepal), Map(New Queen Street), Map(Oasis), Map(Oasis), Map(Oasis), Map(Oasis), Map(Paraíso), Map(Paris), Map(Petra), Map(Practice Range), Map(Rialto), Map(Route 66), Map(Temple of Anubis), Map(Volskaya Industries), Map(Watchpoint: Gibraltar), Map(Workshop Chamber), Map(Workshop Expanse), Map(Workshop Expanse), Map(Workshop Green Screen), Map(Workshop Island), Map(Workshop Island), Map(Shambali Monastery)), Global.__currentMap___));
+            Set Global Variable(__currentMap____, Global.__currentMap___);
+            Abort;
+        End;
+        Set Global Variable(__currentMap____, Ray Cast Hit Position(Vector(500, 100, 500), Vector(-500, -100, -500), Null, Null, False));
+        If(Or(Compare(Global.__currentMap____, ==, Vector(0, 0, 0)), Compare(Global.__currentMap____, ==, Vector(-500, -100, -500))));
+            Set Global Variable(__currentMap____, Ray Cast Hit Position(Vector(30, 5, 0), Vector(-30, -10, -10), Null, Null, False));
+            If(Compare(Global.__currentMap____, ==, Vector(-30, -10, -10)));
+                Set Global Variable(__currentMap____, Ray Cast Hit Position(Vector(200, 20, 100), Vector(100, -100, -100), Null, Null, False));
+                If(Compare(Global.__currentMap____, ==, Vector(100, -100, -100)));
+                    Set Global Variable(__currentMap____, Ray Cast Hit Position(Vector(300, 20, -100), Vector(300, -100, 100), Null, Null, False));
+                    If(Compare(Global.__currentMap____, ==, Vector(300, -100, 100)));
+                        Set Global Variable(__currentMap____, Ray Cast Hit Position(Vector(50, 100, -150), Vector(-50, -100, -160), Null, Null, False));
+                        If(Compare(Global.__currentMap____, ==, Vector(-50, -100, -160)));
+                            Set Global Variable(__currentMap____, Ray Cast Hit Position(Vector(0, 300, 340), Vector(0, -100, -300), Null, Null, False));
+                            If(Compare(Global.__currentMap____, ==, Vector(0, -100, -300)));
+                                Set Global Variable(__currentMap____, Ray Cast Hit Position(Vector(140, 10, -240), Vector(200, -10, -300), Null, Null, False));
+                                If(Compare(Global.__currentMap____, ==, Vector(200, -10, -300)));
+                                    Set Global Variable(__currentMap____, Ray Cast Hit Position(Vector(-180, 30, 60), Vector(-180, -50, -60), Null, Null, False));
+                                End;
+                            End;
+                        End;
+                    End;
+                End;
+            End;
+        End;
+        Set Global Variable(__currentMap____, Add(Add(Multiply(100, Round To Integer(Y Component Of(Global.__currentMap____), Up)), Multiply(10, Round To Integer(X Component Of(Global.__currentMap____), To Nearest))), Round To Integer(Z Component Of(Global.__currentMap____), Down)));
+        If(Compare(Global.__currentMap____, ==, 10121));
+            Set Global Variable(__currentMap____, Ray Cast Hit Position(Vector(-60, 20, -60), Vector(60, -10, 60), Null, Null, False));
+            If(Compare(Global.__currentMap____, ==, Vector(60, -10, 60)));
+                Set Global Variable(__currentMap____, Ray Cast Hit Position(Vector(-180, -70, 60), Vector(-180, -100, -60), Null, Null, False));
+            End;
+            Set Global Variable(__currentMap____, Add(Add(Multiply(100, Round To Integer(Y Component Of(Global.__currentMap____), Up)), Multiply(10, Round To Integer(X Component Of(Global.__currentMap____), To Nearest))), Round To Integer(Z Component Of(Global.__currentMap____), Down)));
+    }
+}
+
+rule ("Initialize global variables") {
+    event {
+        Ongoing - Global;
+    }
+    actions {
+        Set Global Variable(IsBallPickedUp, False);
+        Set Global Variable(AssembleHeroTimerConstant, 10);
+        Set Global Variable(BallColor, Color(Turquoise));
+        Set Global Variable(HasGoalBeenScored, False);
+        Set Global Variable(I, 0);
+        Set Global Variable(Team1Goals, 0);
+        Set Global Variable(Team2Goals, 0);
+        Set Global Variable(MinutesOnTimer, 10);
+        Set Global Variable(TensOnTimer, 0);
+        Set Global Variable(SecondsOnTimer, 0);
+        Set Global Variable(TimerStarted, False);
+    }
+}
+
+rule ("Initialize player variables") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    actions {
+        Set Player Variable(Event Player, IsBallPickUpable, False);
+        Set Player Variable(Event Player, ArrowColor, Color(White));
+    }
+}
+
+rule ("Initialise Map Locations") {
+    event {
+        Ongoing - Global;
+    }
+    actions {
+        If(And(Compare(Global.__currentMap____, ==, Map(Ilios)), Compare(Objective Index, ==, 2)));
+            Set Global Variable(MapPositions, Vector(4.58, 61.54, -178.27));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(-5.78, 61.54, -146.79)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(63.68, 61.54, -146.65)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(53.34, 61.54, -177.56)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(95, 63, -156.5)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(-37, 63, -156.5)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(116.19, 61.54, -159.01)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(-58.49, 61.54, -158.87)));
+            Set Global Variable(MapCenter, Vector(28.25, 58.62, -157.29));
+        End;
+        If(And(Compare(Global.__currentMap____, ==, Map(Nepal)), Compare(Objective Index, ==, 2)));
+            Set Global Variable(MapPositions, Vector(104.37, 129.25, 0.029));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(56.955, 129.25, -24.005)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(56.913, 129.25, 24.033)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(0, 0, 0)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(80.973, 132.05, -48.138)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(80.979, 132.05, 47.977)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(81.692, 131.05, -69.271)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(81.137, 131.05, 70.557)));
+            Set Global Variable(MapCenter, Vector(83.273, 129.7, 0.03));
+        End;
+        If(And(Compare(Global.__currentMap____, ==, Map(Busan)), Compare(Objective Index, ==, 0)));
+            Set Global Variable(MapCenter, Vector(51.853, 7.348, -92.651));
+            Set Global Variable(MapPositions, Vector(19.455, 14.348, -109.096));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(45.843, 11.348, -117.135)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(58.057, 11.348, -117.169)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(84.106, 14.348, -109.167)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(9.582, 16.946, -125.565)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(93.601, 16.649, -125.578)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(-6.489, 17.283, -125.451)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(107.939, 17.283, -125.774)));
+        End;
+        If(And(Compare(Global.__currentMap____, ==, Map(Ilios)), Compare(Objective Index, ==, 0)));
+            Set Global Variable(MapCenter, Vector(357.379, -24.464, -51.101));
+            Set Global Variable(MapPositions, Vector(338.886, -22.502, -33.726));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(331.662, -22.488, -51.337)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(63.68, 61.54, -146.65)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(53.34, 61.54, -177.56)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(350.499, -21.806, 10.814)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(307.351, -22.025, -90.265)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(332.107, -24.48, 28.34)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(284.292, -24.468, -86.981)));
+        End;
+        If(And(Compare(Global.__currentMap____, ==, Map(Lijiang Tower)), Compare(Objective Index, ==, 0)));
+            Set Global Variable(MapCenter, Vector(1, -2, -60));
+            Set Global Variable(MapPositions, Vector(33.711, 1.212, -28.007));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(900, 900, 900)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(900, 900, 900)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(-31.71, 1.212, -27.463)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(43.205, 3.352, -29.162)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(-40.992, 3.352, -29.164)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(62.616, 3.352, -33.501)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(-61.764, 3.352, -32.17)));
+        End;
+        If(And(Compare(Global.__currentMap____, ==, Map(Oasis)), Compare(Objective Index, ==, 0)));
+            Set Global Variable(MapCenter, Vector(143.5, 2, 247.5));
+            Set Global Variable(MapPositions, Vector(900, 900, 900));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(900, 900, 900)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(900, 900, 900)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(900, 900, 900)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(121, 5, 295)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(191, 5, 225.5)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(100, 1, 300)));
+            Set Global Variable(MapPositions, Append To Array(Global.MapPositions, Vector(200, 1, 200)));
+    }
+}
+
+rule ("Match Settings") {
+    event {
+        Ongoing - Global;
+    }
+    actions {
+        Set Global Variable(AssembleHeroTimerConstant, Workshop Setting Integer(Custom String("Match Settings", Null, Null, Null), Custom String("Assemble Heroes Timer", Null, Null, Null), 10, -2147483648, 2147483647, 0));
+        Set Global Variable(GoalsToWin, Workshop Setting Integer(Custom String("Match Settings", Null, Null, Null), Custom String("Goals To Win", Null, Null, Null), 5, -2147483648, 2147483647, 0));
+        Set Global Variable(MinutesOnTimer, Workshop Setting Integer(Custom String("Match Settings", Null, Null, Null), Custom String("Minutes on Timer", Null, Null, Null), 10, -2147483648, 2147483647, 0));
+    }
+}
+
+rule ("Startup") {
+    event {
+        Ongoing - Global;
+    }
+    actions {
+        Disable Built-In Game Mode Scoring;
+        Disable Built-In Game Mode Completion;
+    }
+}
+
+rule ("Timer") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Global.TimerStarted == True;
+    }
+    actions {
+        Create HUD Text(All Players(All Teams), Custom String("{0}:{1}{2}", Global.MinutesOnTimer, Global.TensOnTimer, Global.SecondsOnTimer), Custom String("", Null, Null, Null), Custom String("", Null, Null, Null), Top, -1, Color(White), Color(White), Color(White), String, Visible Always);
+        Set Global Variable(TimerHud, Last Text ID);
+        While(True);
+            If(And(And(Compare(Global.SecondsOnTimer, <, 0), Compare(Global.TensOnTimer, ==, 0)), Compare(Global.MinutesOnTimer, >, 0)));
+                Modify Global Variable(MinutesOnTimer, Subtract, 1);
+                Set Global Variable(TensOnTimer, 5);
+                Set Global Variable(SecondsOnTimer, 9);
+            End;
+            If(And(Compare(Global.SecondsOnTimer, <, 0), Compare(Global.TensOnTimer, >, 0)));
+                Modify Global Variable(TensOnTimer, Subtract, 1);
+                Set Global Variable(SecondsOnTimer, 9);
+            End;
+            Wait(1, Ignore Condition);
+            Modify Global Variable(SecondsOnTimer, Subtract, 1);
+        End;
+    }
+}
+
+rule ("Timer ends") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Global.MinutesOnTimer == 0;
+        Global.SecondsOnTimer == 0;
+        Global.TensOnTimer == 0;
+    }
+    actions {
+        Destroy HUD Text(Global.TimerHud);
+        If(Compare(Global.Team1Goals, >, Global.Team2Goals));
+            Teleport(Global.Ball, Vector(10000, 10000, 10000));
+            Respawn(All Players(All Teams));
+            Start Forcing Throttle(All Players(All Teams), 0, 0, 0, 0, 0, 0);
+            Set Slow Motion(10);
+            Start Camera(All Players(All Teams), Add(Global.MapCenter, Vector(-8, 2, 0)), Global.MapCenter, 0);
+            Big Message(All Players(Team 1), Custom String("{0}!", Custom String("You Win", Null, Null, Null), Null, Null));
+            Big Message(All Players(Team 2), Custom String("{0}!", Custom String("You Lose", Null, Null, Null), Null, Null));
+            Teleport(Players In Slot(0, Team 1), Add(Global.MapCenter, Vector(0, 0, -2)));
+            Teleport(Players In Slot(1, Team 1), Add(Global.MapCenter, Vector(0, 0, -1)));
+            Teleport(Players In Slot(2, Team 1), Add(Global.MapCenter, Vector(0, 0, 0)));
+            Teleport(Players In Slot(3, Team 1), Add(Global.MapCenter, Vector(0, 0, 1)));
+            Teleport(Players In Slot(4, Team 1), Add(Global.MapCenter, Vector(0, 0, 2)));
+            Declare Team Victory(Team 1);
+        Else If(Compare(Global.Team2Goals, >, Global.Team1Goals));
+            Start Camera(All Players(All Teams), Add(Global.MapCenter, Vector(-8, 2, 0)), Global.MapCenter, 0);
+            Teleport(Global.Ball, Vector(10000, 10000, 10000));
+            Respawn(All Players(All Teams));
+            Start Forcing Throttle(All Players(All Teams), 0, 0, 0, 0, 0, 0);
+            Set Slow Motion(10);
+            Big Message(All Players(Team 1), Custom String("{0}!", Custom String("You Lose", Null, Null, Null), Null, Null));
+            Big Message(All Players(Team 2), Custom String("{0}!", Custom String("You Win", Null, Null, Null), Null, Null));
+            Teleport(Players In Slot(0, Team 2), Add(Global.MapCenter, Vector(0, 0, -2)));
+            Teleport(Players In Slot(1, Team 2), Add(Global.MapCenter, Vector(0, 0, -1)));
+            Teleport(Players In Slot(2, Team 2), Add(Global.MapCenter, Vector(0, 0, 0)));
+            Teleport(Players In Slot(3, Team 2), Add(Global.MapCenter, Vector(0, 0, 1)));
+            Teleport(Players In Slot(4, Team 2), Add(Global.MapCenter, Vector(0, 0, 2)));
+            Declare Team Victory(Team 2);
+        Else;
+            Big Message(All Players(All Teams), Custom String("NEXT GOAL WINS!", Null, Null, Null));
+            Set Global Variable(Team1Goals, Subtract(Global.GoalsToWin, 1));
+            Set Global Variable(Team2Goals, Subtract(Global.GoalsToWin, 1));
+    }
+}
+
+rule ("When Bots spawns/Spawn Ball") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Is Game In Progress == True;
+        Is Assembling Heroes == False;
+        Is Between Rounds == False;
+        Is In Setup == False;
+    }
+    actions {
+        Create Dummy Bot(Hero(Torbjörn), Team 1, 5, Global.MapCenter, Vector(0, 0, 0));
+        Create Dummy Bot(Hero(Torbjörn), Team 2, 5, Global.MapCenter, Vector(0, 0, 0));
+        Set Global Variable(Ball, Players In Slot(5, Team 1));
+        Set Global Variable(Ball2, Players In Slot(5, Team 2));
+        Teleport(Global.Ball, Global.MapCenter);
+        Teleport(Global.Ball2, Global.MapCenter);
+        Create Effect(All Players(All Teams), Sphere, Global.BallColor, Add(Position Of(Global.Ball), Vector(0, 1, 0)), 0.5, Visible To Position and Radius);
+        Set Global Variable(BallEffect, Last Created Entity);
+        Set Status(Players In Slot(5, All Teams), Null, Stunned, 9999);
+        Set Status(Players In Slot(5, All Teams), Null, Phased Out, 9999);
+        Set Invisible(Global.Ball, All);
+        Set Invisible(Global.Ball2, All);
+        Set Global Variable(BallPosition, Position Of(Global.Ball));
+        Chase Global Variable At Rate(BallPosition, Position Of(Global.Ball), 999999, Destination and Rate);
+        Set Global Variable(TimerStarted, True);
+        Wait(3, Ignore Condition);
+        Set Player Variable(All Players(All Teams), IsBallPickUpable, True);
+    }
+}
+
+rule ("On Player Move/join") {
+    event {
+        Player Joined Match;
+        All;
+        All;
+    }
+    conditions {
+        Is Game In Progress == True;
+    }
+    actions {
+        Wait(5, Ignore Condition);
+        Set Player Variable(Event Player, IsBallPickUpable, True);
+    }
+}
+
+rule ("On Player leaves/moves with ball") {
+    event {
+        Player Left Match;
+        All;
+        All;
+    }
+    conditions {
+        Is Game In Progress == True;
+        Global.CurrentBallHolder == Event Player;
+    }
+    actions {
+        Set Global Variable(Assister, Null);
+        Set Global Variable(CurrentBallHolder, Null);
+        Set Global Variable(IsBallPickedUp, False);
+        Teleport(Global.Ball, Add(Position Of(Event Player), Up));
+        Teleport(Global.Ball2, Add(Position Of(Event Player), Up));
+        Chase Global Variable At Rate(BallPosition, Add(Add(Position Of(Global.Ball), Facing Direction Of(Event Player)), Vector(0, 1, 0)), 9999, Destination and Rate);
+        Destroy Effect(Global.BallEffect);
+        Create Effect(All Players(All Teams), Sphere, Global.BallColor, Global.BallPosition, 0.5, Visible To Position and Radius);
+        Set Global Variable(BallEffect, Last Created Entity);
+    }
+}
+
+rule ("Spawn Goals") {
+    event {
+        Ongoing - Global;
+    }
+    actions {
+        Create Effect(All Players(All Teams), Good Aura, Color(Team 1), Value In Array(Global.MapPositions, 4), 1, Visible To Position and Radius);
+        Set Global Variable(Team1GoalEffect, Last Created Entity);
+        Create Effect(All Players(All Teams), Good Aura, Color(Team 2), Value In Array(Global.MapPositions, 5), 1, Visible To Position and Radius);
+        Set Global Variable(Team2GoalEffect, Last Created Entity);
+    }
+}
+
+rule ("Create jump pads") {
+    event {
+        Ongoing - Global;
+    }
+    actions {
+        Create Effect(All Players(All Teams), Ring, Color(Green), First Of(Global.MapPositions), 2, Visible To Position and Radius);
+        Create Effect(All Players(All Teams), Ring, Color(Green), Value In Array(Global.MapPositions, 1), 2, Visible To Position and Radius);
+        Create Effect(All Players(All Teams), Ring, Color(Green), Value In Array(Global.MapPositions, 2), 2, Visible To Position and Radius);
+        Create Effect(All Players(All Teams), Ring, Color(Green), Value In Array(Global.MapPositions, 3), 2, Visible To Position and Radius);
+    }
+}
+
+rule ("Picking up the ball") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Event Player != Global.Ball;
+        Event Player != Global.Ball2;
+        Global.IsBallPickedUp == False;
+        Is In Spawn Room(Event Player) == False;
+        Distance Between(Event Player, Position Of(Global.Ball)) <= 1.75;
+        Is Alive(Event Player) == True;
+        Is In Spawn Room(Event Player) == False;
+        Is Alive(Event Player) == True;
+        (Event Player).IsBallPickUpable == True;
+        Hero(Torbjörn) == Hero Of(Players In Slot(5, Team 1));
+        Hero(Torbjörn) == Hero Of(Players In Slot(5, Team 2));
+        Is Assembling Heroes == False;
+    }
+    actions {
+        Set Global Variable(BallPosition, Position Of(Event Player));
+        Chase Global Variable At Rate(BallPosition, Add(Add(Position Of(Event Player), Facing Direction Of(Event Player)), Vector(0, 1, 0)), 99999, Destination and Rate);
+        Destroy Effect(Global.BallEffect);
+        Create Effect(All Players(All Teams), Sphere, Global.BallColor, Global.BallPosition, 0.5, Visible To Position and Radius);
+        Set Global Variable(BallEffect, Last Created Entity);
+        Set Player Variable(Event Player, IsBallPickUpable, False);
+        Set Global Variable(IsBallPickedUp, True);
+        Play Effect(Event Player, Buff Impact Sound, Color(Aqua), Position Of(Event Player), 30);
+        Set Status(Event Player, Null, Hacked, 9999);
+        Set Global Variable(CurrentBallHolder, Event Player);
+        Set Global Variable(LastBallHolder, Event Player);
+        Press Button(Event Player, Button(Ability 1));
+    }
+}
+
+rule ("Throwing ball") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Event Player != Global.Ball;
+        Event Player != Global.Ball2;
+        Global.CurrentBallHolder == Event Player;
+        Is Button Held(Event Player, Button(Interact)) == True;
+    }
+    actions {
+        Teleport(Global.Ball, Add(Add(Position Of(Event Player), Facing Direction Of(Event Player)), Vector(0, 1.5, 0)));
+        Teleport(Global.Ball2, Add(Add(Position Of(Event Player), Facing Direction Of(Event Player)), Vector(0, 1.5, 0)));
+        Destroy Effect(Global.BallEffect);
+        Chase Global Variable At Rate(BallPosition, Position Of(Global.Ball), 9999, Destination and Rate);
+        Create Effect(All Players(All Teams), Sphere, Global.BallColor, Add(Global.BallPosition, Vector(0, 0.5, 0)), 0.5, Visible To Position and Radius);
+        Set Global Variable(BallEffect, Last Created Entity);
+        Apply Impulse(Global.Ball, Facing Direction Of(Event Player), 35, To World, Cancel Contrary Motion);
+        Apply Impulse(Global.Ball2, Facing Direction Of(Event Player), 35, To World, Cancel Contrary Motion);
+        Set Global Variable(IsBallPickedUp, False);
+        Set Global Variable(CurrentBallHolder, Null);
+        Wait(1.5, Ignore Condition);
+        Set Player Variable(Event Player, IsBallPickUpable, True);
+        Clear Status(Event Player, Hacked);
+        Clear Status(Event Player, Hacked);
+        Set Global Variable(Assister, Event Player);
+    }
+}
+
+rule ("ball off edge") {
+    event {
+        Player Died;
+        All;
+        All;
+    }
+    conditions {
+        Or(Compare(Event Player, ==, Global.Ball), Compare(Event Player, ==, Global.Ball2)) == True;
+    }
+    actions {
+        Set Global Variable(CurrentBallHolder, Null);
+        Respawn(Global.Ball);
+        Teleport(Global.Ball, Global.MapCenter);
+        Respawn(Global.Ball2);
+        Teleport(Global.Ball2, Global.MapCenter);
+        Chase Global Variable At Rate(BallPosition, Add(Add(Position Of(Event Player), Facing Direction Of(Event Player)), Vector(0, 1, 0)), 9999, Destination and Rate);
+        Destroy Effect(Global.BallEffect);
+        Create Effect(All Players(All Teams), Sphere, Global.BallColor, Global.BallPosition, 0.5, Visible To Position and Radius);
+        Set Global Variable(BallEffect, Last Created Entity);
+    }
+}
+
+rule ("Death with ball") {
+    event {
+        Player Died;
+        All;
+        All;
+    }
+    conditions {
+        Event Player == Global.CurrentBallHolder;
+    }
+    actions {
+        Set Global Variable(Assister, Null);
+        Set Global Variable(CurrentBallHolder, Null);
+        Set Global Variable(IsBallPickedUp, False);
+        Teleport(Global.Ball, Add(Position Of(Event Player), Up));
+        Teleport(Global.Ball2, Add(Position Of(Event Player), Up));
+        Chase Global Variable At Rate(BallPosition, Add(Add(Position Of(Global.Ball), Facing Direction Of(Event Player)), Vector(0, 1, 0)), 9999, Destination and Rate);
+        Destroy Effect(Global.BallEffect);
+        Create Effect(All Players(All Teams), Sphere, Global.BallColor, Global.BallPosition, 0.5, Visible To Position and Radius);
+        Set Global Variable(BallEffect, Last Created Entity);
+        Clear Status(Event Player, Hacked);
+        Clear Status(Event Player, Hacked);
+        Set Player Variable(Event Player, IsBallPickUpable, True);
+    }
+}
+
+rule ("Team 2 Scores") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Distance Between(Global.Ball, Value In Array(Global.MapPositions, 4)) <= 1.5;
+        Is Game In Progress == True;
+        Global.IsBallPickedUp == False;
+    }
+    actions {
+        Set Global Variable(HasGoalBeenScored, True);
+        Teleport(Global.Ball, Vector(1000, 1000, 1000));
+        Play Effect(All Players(All Teams), Explosion Sound, Color(White), Value In Array(Global.MapPositions, 4), 100);
+        Play Effect(All Players(All Teams), Good Explosion, Color(Purple), Value In Array(Global.MapPositions, 4), 1);
+        Set Slow Motion(10);
+        Start Camera(All Players(All Teams), Global.CameraPositionOnGoalScored, Add(Position Of(Global.LastBallHolder), Vector(0, 1, 0)), 10);
+        If(Compare(Team Of(Global.LastBallHolder), ==, Team 1));
+            Big Message(All Players(All Teams), Custom String("{0} {1}", Global.LastBallHolder, Custom String("Scored An Own Goal!", Null, Null, Null), Null));
+        Else;
+            Big Message(All Players(All Teams), Custom String("{0} {1}", Global.LastBallHolder, Custom String("Scored a Goal!", Null, Null, Null), Null));
+        End;
+        If(And(Compare(Team Of(Global.Assister), ==, Team 2), Compare(Global.Assister, !=, Null)));
+            Small Message(All Players(All Teams), Custom String("{0} {1}", Global.Assister, Custom String("Assisted!", Null, Null, Null), Null));
+        End;
+        Wait(0.75, Ignore Condition);
+        Set Slow Motion(100);
+        Set Global Variable(HasGoalBeenScored, False);
+        Respawn(All Players(All Teams));
+        Teleport(Global.Ball, Value In Array(Global.MapPositions, 6));
+        Teleport(Global.Ball2, Value In Array(Global.MapPositions, 6));
+        Stop Camera(All Players(All Teams));
+        Modify Player Variable(Global.LastBallHolder, Goals, Add, 1);
+        Modify Global Variable(Team2Goals, Add, 1);
+        Modify Player Variable(Global.Assister, Assists, Add, 1);
+    }
+}
+
+rule ("Team 1 Scores") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Distance Between(Global.Ball, Value In Array(Global.MapPositions, 5)) <= 1.5;
+        Is Game In Progress == True;
+        Global.IsBallPickedUp == False;
+    }
+    actions {
+        Set Global Variable(I, 0);
+        Set Global Variable(HasGoalBeenScored, True);
+        Teleport(Global.Ball, Vector(1000, 1000, 1000));
+        Play Effect(All Players(All Teams), Explosion Sound, Color(White), Value In Array(Global.MapPositions, 5), 100);
+        Play Effect(All Players(All Teams), Good Explosion, Color(Purple), Value In Array(Global.MapPositions, 5), 1);
+        Set Slow Motion(10);
+        Start Camera(All Players(All Teams), Global.CameraPositionOnGoalScored, Add(Position Of(Global.LastBallHolder), Vector(0, 1, 0)), 10);
+        If(Compare(Team Of(Global.LastBallHolder), ==, Team 2));
+            Big Message(All Players(All Teams), Custom String("{0} {1}", Global.LastBallHolder, Custom String("Scored An Own Goal!", Null, Null, Null), Null));
+        Else;
+            Big Message(All Players(All Teams), Custom String("{0} {1}", Global.LastBallHolder, Custom String("Scored a Goal!", Null, Null, Null), Null));
+        End;
+        If(And(Compare(Team Of(Global.Assister), ==, Team 1), Compare(Global.Assister, !=, Null)));
+            Small Message(All Players(All Teams), Custom String("{0} {1}", Global.Assister, Custom String("Assisted!", Null, Null, Null), Null));
+        End;
+        Wait(0.75, Ignore Condition);
+        Set Slow Motion(100);
+        Set Global Variable(HasGoalBeenScored, False);
+        Respawn(All Players(All Teams));
+        Teleport(Global.Ball, Value In Array(Global.MapPositions, 7));
+        Teleport(Global.Ball2, Value In Array(Global.MapPositions, 7));
+        Stop Camera(All Players(All Teams));
+        Modify Player Variable(Global.LastBallHolder, Goals, Add, 1);
+        Modify Global Variable(Team1Goals, Add, 1);
+    }
+}
+
+rule ("Scoreboard - Goals for Team 1") {
+    event {
+        Ongoing - Global;
+    }
+    actions {
+        Create HUD Text(All Players(Team 1), Custom String("", Null, Null, Null), Custom String("", Null, Null, Null), Custom String("My Team {0} - {1} Enemy Team", Global.Team1Goals, Global.Team2Goals, Null), Top, 0, Color(Green), Color(White), Color(White), Visible To Sort Order String and Color, Visible Always);
+    }
+}
+
+rule ("Scoreboard - Goals for Team 2") {
+    event {
+        Ongoing - Global;
+    }
+    actions {
+        Create HUD Text(All Players(Team 2), Custom String("", Null, Null, Null), Custom String("", Null, Null, Null), Custom String("My Team {0} - {1} Enemy Team", Global.Team2Goals, Global.Team1Goals, Null), Top, 0, Color(Green), Color(White), Color(White), Visible To Sort Order String and Color, Visible Always);
+    }
+}
+
+rule ("Icon for player holding ball") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Global.IsBallPickedUp == True;
+        Global.CurrentBallHolder != Event Player;
+    }
+    actions {
+        If(Compare(Team Of(Event Player), ==, Team Of(Global.CurrentBallHolder)));
+            If(Compare(Team Of(Event Player), ==, Team 1));
+                Set Player Variable(Event Player, ArrowColor, Color(Team 1));
+            Else;
+                Set Player Variable(Event Player, ArrowColor, Color(Team 2));
+            End;
+        Else;
+            If(Compare(Team Of(Event Player), ==, Team 1));
+                Set Player Variable(Event Player, ArrowColor, Color(Team 2));
+            Else;
+                Set Player Variable(Event Player, ArrowColor, Color(Team 1));
+            End;
+        End;
+        Destroy Icon((Event Player).BallIcon);
+        Create Icon(Event Player, Add(Global.CurrentBallHolder, Vector(0, 2, 0)), Arrow: Down, Position and Color, (Event Player).ArrowColor, True);
+        Set Player Variable(Event Player, BallIcon, Last Created Entity);
+    }
+}
+
+rule ("icon for ball on ground") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Global.IsBallPickedUp == False;
+        Is Game In Progress == True;
+    }
+    actions {
+        Set Player Variable(Event Player, ArrowColor, Color(White));
+        Destroy Icon((Event Player).BallIcon);
+        Create Icon(Event Player, Add(Global.BallPosition, Vector(0, 1, 0)), Arrow: Down, Visible To Position and Color, (Event Player).ArrowColor, True);
+        Set Player Variable(Event Player, BallIcon, Last Created Entity);
+    }
+}
+
+rule ("icon while held") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Global.IsBallPickedUp == True;
+        Global.CurrentBallHolder == Event Player;
+    }
+    actions {
+        Destroy Icon((Event Player).BallIcon);
+    }
+}
+
+rule ("Icon for team 1 goal") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Team Of(Event Player) == Team 2;
+    }
+    actions {
+        Create Icon(Event Player, Value In Array(Global.MapPositions, 4), Flag, Visible To Position and Color, Color(Red), True);
+    }
+}
+
+rule ("Icon for team 2 goal") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Team Of(Event Player) == Team 1;
+    }
+    actions {
+        Create Icon(Event Player, Value In Array(Global.MapPositions, 5), Flag, Visible To Position and Color, Color(Red), True);
+    }
+}
+
+rule ("Winning Team 1") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Global.Team1Goals >= Global.GoalsToWin;
+    }
+    actions {
+        Teleport(Global.Ball, Vector(10000, 10000, 10000));
+        Respawn(All Players(All Teams));
+        Start Forcing Throttle(All Players(All Teams), 0, 0, 0, 0, 0, 0);
+        Set Slow Motion(10);
+        Start Camera(All Players(All Teams), Add(Global.MapCenter, Vector(-8, 2, 0)), Global.MapCenter, 0);
+        Big Message(All Players(Team 1), Custom String("{0}!", Custom String("You Win", Null, Null, Null), Null, Null));
+        Big Message(All Players(Team 2), Custom String("{0}!", Custom String("You Lose", Null, Null, Null), Null, Null));
+        Teleport(Players In Slot(0, Team 1), Add(Global.MapCenter, Vector(0, 0, -2)));
+        Teleport(Players In Slot(1, Team 1), Add(Global.MapCenter, Vector(0, 0, -1)));
+        Teleport(Players In Slot(2, Team 1), Add(Global.MapCenter, Vector(0, 0, 0)));
+        Teleport(Players In Slot(3, Team 1), Add(Global.MapCenter, Vector(0, 0, 1)));
+        Teleport(Players In Slot(4, Team 1), Add(Global.MapCenter, Vector(0, 0, 2)));
+        Declare Team Victory(Team 1);
+    }
+}
+
+rule ("Winning Team 2") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Global.Team2Goals >= Global.GoalsToWin;
+    }
+    actions {
+        Start Camera(All Players(All Teams), Add(Global.MapCenter, Vector(-8, 2, 0)), Global.MapCenter, 0);
+        Teleport(Global.Ball, Vector(10000, 10000, 10000));
+        Respawn(All Players(All Teams));
+        Start Forcing Throttle(All Players(All Teams), 0, 0, 0, 0, 0, 0);
+        Set Slow Motion(10);
+        Big Message(All Players(Team 1), Custom String("{0}!", Custom String("You Lose", Null, Null, Null), Null, Null));
+        Big Message(All Players(Team 2), Custom String("{0}!", Custom String("You Win", Null, Null, Null), Null, Null));
+        Teleport(Players In Slot(0, Team 2), Add(Global.MapCenter, Vector(0, 0, -2)));
+        Teleport(Players In Slot(1, Team 2), Add(Global.MapCenter, Vector(0, 0, -1)));
+        Teleport(Players In Slot(2, Team 2), Add(Global.MapCenter, Vector(0, 0, 0)));
+        Teleport(Players In Slot(3, Team 2), Add(Global.MapCenter, Vector(0, 0, 1)));
+        Teleport(Players In Slot(4, Team 2), Add(Global.MapCenter, Vector(0, 0, 2)));
+        Declare Team Victory(Team 2);
+    }
+}
+
+rule ("Jumppad") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Distance Between(Event Player, First Of(Global.MapPositions)) <= 2;
+    }
+    actions {
+        Apply Impulse(Event Player, Up, 20, To World, Cancel Contrary Motion);
+        Play Effect(All Players(All Teams), Explosion Sound, Color(White), Event Player, 100);
+    }
+}
+
+rule ("Jumppad 2") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Distance Between(Event Player, Value In Array(Global.MapPositions, 1)) <= 2;
+    }
+    actions {
+        Apply Impulse(Event Player, Up, 20, To World, Cancel Contrary Motion);
+        Play Effect(All Players(All Teams), Explosion Sound, Color(White), Event Player, 100);
+    }
+}
+
+rule ("Jumppad 3") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Distance Between(Event Player, Value In Array(Global.MapPositions, 2)) <= 2;
+    }
+    actions {
+        Apply Impulse(Event Player, Up, 20, To World, Cancel Contrary Motion);
+        Play Effect(All Players(All Teams), Explosion Sound, Color(White), Event Player, 100);
+    }
+}
+
+rule ("Jumppad 4") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Distance Between(Event Player, Value In Array(Global.MapPositions, 3)) <= 2;
+    }
+    actions {
+        Apply Impulse(Event Player, Up, 20, To World, Cancel Contrary Motion);
+        Play Effect(All Players(All Teams), Explosion Sound, Color(White), Event Player, 100);
+    }
+}
+
+rule ("if genji deflecting") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Hero Of(Event Player) == Hero(Genji);
+        Is Using Ability 2(Event Player) == True;
+    }
+    actions {
+        Set Player Variable(Event Player, IsBallPickUpable, False);
+    }
+}
+
+rule ("Genji Deflecting Ball") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Distance Between(Global.Ball, Event Player) <= 2.5;
+        Hero Of(Event Player) == Hero(Genji);
+        Is Using Ability 2(Event Player) == True;
+    }
+    actions {
+        Apply Impulse(Global.Ball, Facing Direction Of(Event Player), 40, To World, Cancel Contrary Motion);
+        Apply Impulse(Global.Ball2, Facing Direction Of(Event Player), 40, To World, Cancel Contrary Motion);
+    }
+}
+
+rule ("if genji not deflecting") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Hero Of(Event Player) == Hero(Genji);
+        Is Using Ability 2(Event Player) == False;
+    }
+    actions {
+        Set Player Variable(Event Player, IsBallPickUpable, True);
+    }
+}
+
+rule ("Roadhog hook ball Team 2") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Hero Of(Event Player) == Hero(Roadhog);
+        Is In Line of Sight(Event Player, Global.G, Enemy Barriers Block LOS) == True;
+        Is Using Ability 1(Event Player) == True;
+        Global.IsBallPickedUp == False;
+        Team Of(Event Player) == Team 2;
+    }
+    actions {
+        Start Forcing Player Position(Global.Ball2, Global.Ball, True);
+        Clear Status(Global.Ball, Phased Out);
+    }
+}
+
+rule ("Loop for camera circling on goal") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Global.HasGoalBeenScored == True;
+    }
+    actions {
+        Modify Global Variable(I, Add, 1);
+        Set Global Variable(CameraPositionOnGoalScored, Vector(Add(X Component Of(Position Of(Global.LastBallHolder)), Multiply(2, Cosine From Radians(Multiply(Global.I, 0.1)))), Add(Y Component Of(Position Of(Global.LastBallHolder)), 2), Add(Z Component Of(Position Of(Global.LastBallHolder)), Multiply(2, Sine From Radians(Multiply(Global.I, 0.1))))));
+        Wait(0.016, Ignore Condition);
+        Loop If Condition Is True;
+    }
+}
+
+rule ("Clear hacked on death") {
+    event {
+        Player Died;
+        All;
+        All;
+    }
+    actions {
+        Clear Status(Event Player, Hacked);
+        Set Player Variable(Event Player, IsBallPickUpable, True);
+    }
+}
+
+rule ("Assemble hero timer") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Is Assembling Heroes == True;
+    }
+    actions {
+        Set Match Time(Global.AssembleHeroTimerConstant);
+    }
+}
+
+rule ("in spawn time") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Is Game In Progress == False;
+        Is Assembling Heroes == False;
+    }
+    actions {
+        Set Match Time(10);
+    }
+}
+
+rule ("Stop Game Mode function") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Is Game In Progress == True;
+        Is Assembling Heroes == False;
+        Is In Setup == False;
+    }
+    actions {
+        Pause Match Time;
+    }
+}
